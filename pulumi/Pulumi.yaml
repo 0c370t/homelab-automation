@@ -1,0 +1,6 @@
+name: homelab-infrastructure
+runtime: nodejs
+description: Manages brian's homelab infrastructure
+
+backend:
+  url: https://api.pulumi.com

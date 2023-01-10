@@ -1,0 +1,17 @@
+encryptionsalt: v1:+NrQ6QZvGgU=:v1:Dmm+1HfBJjuueNSH:lOcUagji4llwWRbmGMnSylkTZYs1fg==
+config:
+  homelab-infrastructure:proxmoxDatastore: TrueNas-ProxMox
+  homelab-infrastructure:proxmoxDatastoreRoot: /mnt/pve/TrueNas-ProxMox
+  homelab-infrastructure:proxmoxNode: megaman
+  homelab-infrastructure:proxmoxPassword:
+    secure: v1:dPH9uZ1/Efu9Cgl2:fIqZGzQ5iMjQ6w+0GrqIDoqVs2AdEyYTlw==
+  homelab-infrastructure:proxmoxPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC5B8Hl96nXwe2hJy7hLEvIWPJWjMdCSr/Njh9i/oERgNNcyUqwtlBjfSuBBWLLib2G+YbLIq6qbDxeBKndCLgpj999p28z2ZrVT628fjuK0UEeUZa/66Moj5vqcpPKuGSVYsRQ63svdMf7gbkjbeNa9858bffhzeNxP/aneiV0r3iMf5My6qo0BVl/ha/fqWddKGisM/906iwFm+m97bSiezh4jxNjCzS7l8eg9TgYxQGrtXRE6/sUUvwW/FTtVNUk5xTv8cvrnkXAS+T7ipHUUgAhXdp8x7ednlnG4BT+Dv5M+EUnPnRRvHePa/wWlG4LZMKMg8WGZF4jl7JL/k9byN3SSy7nX0QkLbrafbadu54PMRtebM31kF7a9ksg4Ey77AAtXuyadRgTUR8/qTBaX+s06qovwKBxBMe2IXVEo+TAGo7cS6BtGuv0Z7VnCuLeh0W5GsCWOlfagri23aLqsiHj4qR+CO9whAOeon5emHK59iMaGdX0KhTz3jeVFOc= brian@brianmsi
+  homelab-infrastructure:proxmoxUsername:
+    secure: v1:IWfyRuPEnIRdSKhP:IEY27Yl+tChVH+1mWVyklr9bvbFb1m9w
+  #  homelab-infrastructure:proxmoxUsername:
+  #    secure: v1:CA08JxfQDhd8xrc1:pbxPKKQQFcOM2wcg/VzAlwZ7BwTDVhLp98U=
+  homelab-infrastructure:proxmoxVeEndpoint:
+    secure: v1:Ecd+cew8PTCM4sXN:CAaXd6n9253wvOr/xK8uBjKUkyh+fCbiyB59BI4nVsoRjH8=
+  homelab-infrastructure:proxmoxVeInsecure: "false"
+
+### a7d6a3bc-44bf-40f0-9738-588773556370

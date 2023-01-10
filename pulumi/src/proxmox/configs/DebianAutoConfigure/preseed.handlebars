@@ -1,0 +1,72 @@
+#_preseed_V1
+### See also https://www.debian.org/releases/stable/example-preseed.txt
+
+#### Contents of the preconfiguration file (for bullseye)
+### Localization
+# Preseeding only locale sets language, country and locale.
+d-i debian-installer/locale string en_US
+### Keyboard
+d-i keyboard-configuration/xkb-keymap select us
+
+### Network
+d-i netcfg/choose_interface select auto
+d-i netcfg/hostname string {{hostname}}
+
+d-i netcfg/wireless_wep string
+
+### Mirror Configuration
+d-i mirror/country string manual
+d-i mirror/http/hostname string http.us.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+
+### Account Creation
+# Skip creation of non-root user
+d-i passwd/make-user boolean false
+# Set root password
+d-i passwd/root-password-crypted {{rootPasswordCrypt3}} [crypt(3) hash]
+
+### Time configuration
+# UTC Timezone
+d-i clock-setup/utc boolean true
+d-i time/zone string UTC
+
+
+### Disk Setup
+# Do not use LVM
+d-i partman-auto/method string regular
+# Fill the entire disk
+d-i partman-auto-lvm/guided_size string max
+
+# Ensure there are no blocking prompts
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-md/device_remove_md boolean true
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+
+# Use a single partition
+d-i partman-auto/choose_recipe select atomic
+
+# Confirm all the things
+d-i partman-md/confirm boolean true
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+
+### Setting up APT
+# Do not use additional installation media
+d-i apt-setup/cdrom/set-first boolean false
+
+
+### Setting up initial packages
+# Packages to install
+d-i pkgsel/include string openssh-server build-essential
+# If updates should be done
+d-i pkgsel/upgrade select safe-upgrade
+
+### Bootloader setup
+d-i grub-installer/only_debian boolean true
+
+### Installation finish
+d-i finish-install/reboot_in_progress note
