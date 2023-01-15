@@ -1,0 +1,43 @@
+#cloud-config
+hostname: {{ it.hostname }}
+manage_etc_hosts: true
+
+user: {{ it.defaultUser }}
+disable_root: {{ it.defaultUser !== "root" }}
+
+ssh_authorized_keys:
+{{ @each(it.sshKeys) => sshKey }}
+  - {{ sshKey }}
+{{/each}}
+
+chpasswd:
+  expire: False
+
+power_state:
+    mode: reboot
+    message: Cloud init complete; restarting
+
+{{ @if(it.trustedCertificateAuthority) }}
+ca_certs:
+    trusted:
+        - |
+          {{ it.trustedCertificateAuthority.replaceAll("\n", "\n          ") }}
+{{ /if }}
+
+packages:
+  - fish
+  - qemu-guest-agent
+{{ @each(it.extraPackages ?? []) => packageName }}
+  - {{ packageName }}
+{{ /each }}
+
+
+{{ @if (it.commands) }}
+runcmd:
+{{ @each(it.commands ?? []) => command }}
+    - {{ command }}
+{{ /each }}
+{{/if}}
+
+package_upgrade: true
+package_update: true

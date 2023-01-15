@@ -3,6 +3,8 @@ import * as proxmox from "@muhlba91/pulumi-proxmoxve"
 import * as command from "@pulumi/command"
 import {buildUrn, UrnDomains} from "../../utils/buildUrn";
 import {ProxmoxDatastore, ProxmoxServer, ProxmoxTargetNode,} from "../Provider";
+import {BuildVmOptions} from "./BuildVmOptions";
+import {IgnoreableVmProperties} from "./constants";
 
 /**
  * Default URL for a cloud image
@@ -24,7 +26,7 @@ export interface CloudImageTemplateArgs {
 
 export class CloudImageTemplate extends pulumi.ComponentResource {
 
-    static readonly defaultUrl = "https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img"
+    static readonly defaultUrl = "https://cloud-images.ubuntu.com/releases/jammy/release-20230107/ubuntu-22.04-server-cloudimg-amd64.img"
 
     readonly templateVm: proxmox.vm.VirtualMachine
     readonly cloudImage: proxmox.storage.File
@@ -43,59 +45,22 @@ export class CloudImageTemplate extends pulumi.ComponentResource {
                 path: cloudImageUrl,
             }
         }, {parent: this, provider: ProxmoxServer, ignoreChanges: ["sourceFile"]})
-        this.cloudImage.id.apply(console.log)
 
-        this.templateVm = new proxmox.vm.VirtualMachine(`${name} Template Virtual Machine`, {
-            agent: {enabled: true},
-            audioDevice: { enabled: false },
-            cdrom: {enabled: false},
-            cpu: {
-                sockets: 1,
-                cores: 4
-            },
-            description: "This virtual machine should **never** be started; it is used to clone and create other VMs with cloud init",
-            disks: [
-                {
-                    interface: "scsi0",
-                    datastoreId: ProxmoxDatastore,
-                    fileId: this.cloudImage.id,
-                    fileFormat: "qcow2",
-                    size: 32,
-                }
-            ],
-            // Cloud Init Configuration
-            initialization: {
-                datastoreId: ProxmoxDatastore,
-                userAccount: {
-                    username: "root",
-                    keys: publicKeys
-                },
-                ipConfigs: [{
-                    ipv4: {
-                        address: "dhcp",
-                    }
-                }],
-                type: "nocloud",
-            },
-            memory: {
-                dedicated: 4096,
-                shared: 4096
-            },
-            name: "Debian-Cloud-Template",
-            networkDevices: [{
-                bridge: "vmbr0",
-                enabled: true,
-            }],
-            nodeName: ProxmoxTargetNode,
-            operatingSystem: {type: "l26"},
-            started: false,
-            serialDevices: [{ device: "socket" }],
-            template: true,
-            tags: ["pulumi-managed"],
-            vga: {
-                enabled: false
-            },
-            vmId: 10000000,
-        }, {provider: ProxmoxServer, parent: this})
+        this.templateVm = new proxmox.vm.VirtualMachine(`${name} Template Virtual Machine`,
+            {
+                ...BuildVmOptions({
+                    cores: 4,
+                    description: "This virtual machine should **never** be started; it is used to clone and create other VMs with cloud init",
+                    driveSize: 8,
+                    driveFileId: this.cloudImage.id,
+                    isTemplate: true,
+                    memory: 2048,
+                    hostname: `cloud-image-template-90000`,
+                    publicKeys: publicKeys,
+                    startOnCreate: false,
+                    vmId: 90000
+                }),
+            }
+        , {provider: ProxmoxServer, parent: this, ignoreChanges: IgnoreableVmProperties})
     }
 }

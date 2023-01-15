@@ -1,5 +1,7 @@
 encryptionsalt: v1:+NrQ6QZvGgU=:v1:Dmm+1HfBJjuueNSH:lOcUagji4llwWRbmGMnSylkTZYs1fg==
 config:
+  homelab-infrastructure:certificateAuthorityCrtUrl:
+    secure: v1:HwDvVkN/LaGKiKYz:+8wAx25Hu1DGRcJFbw50Sgd2vY3oLZ4iIUo/hlT26kzg6744q/aUoL30mg==
   homelab-infrastructure:proxmoxDatastore: TrueNas-ProxMox
   homelab-infrastructure:proxmoxDatastoreRoot: /mnt/pve/TrueNas-ProxMox
   homelab-infrastructure:proxmoxNode: megaman

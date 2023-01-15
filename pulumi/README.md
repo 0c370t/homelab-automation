@@ -1,15 +1,25 @@
+# ⚠ Warning ⚠
+This is currently using modified versions of several packages that haven't been updated and/or included in this repository.
+It will not work locally until that is sorted.
+
+Modified Packages:
+  - **@muhlba91/pulumi-proxmoxve**  
+    This was modified to use a newer version of the underlying terraform provider [bpg/terraform-provider-proxmox](https://github.com/bpg/terraform-provider-proxmox)  
+    which itself was modified to fix [this issue](https://github.com/bpg/terraform-provider-proxmox/issues/203).
+
 # Required Configuration Values
 
-| Value                | Description                                 | Secret | Required | Example Value                   | 
-|----------------------|---------------------------------------------|--------|----------|---------------------------------|
-| proxmoxVeEndpoint    | Proxmox API Endpoint                        | ✅      | ✅        | `http://proxmox-host.com:8006/` |
-| proxmoxVeInsecure    | ???                                         | ❌      | ✅        | `true`                          |
-| proxmoxUsername      | Username for Proxmox Auth                   | ✅      | ✅        | `user@realm`                    |
-| proxmoxPassword      | Password for Proxmox Auth                   | ✅      | ✅        | `some-password`                 |
-| proxmoxDatastore     | Datastore to use for configuration files    | ❌      | ✅        | `local`                         |
-| proxmoxDatastoreRoot | Filesystem root for the preferred datastore | ✅      | ✅        | `/var/lib/vz`                   |
-| proxmoxNode          | Proxmox Node to interact with               | ❌      | ✅        | `proxmox-host`                  |
-| proxmoxPublicKey     | Public Key to access created VMs            | ❌      | ❌        |                                 |
+| Value                      | Description                                                            | Secret | Required | Example Value                   | 
+|----------------------------|------------------------------------------------------------------------|--------|----------|---------------------------------|
+| proxmoxVeEndpoint          | Proxmox API Endpoint                                                   | ✅      | ✅        | `http://proxmox-host.com:8006/` |
+| proxmoxVeInsecure          | ???                                                                    | ❌      | ✅        | `true`                          |
+| proxmoxUsername            | Username for Proxmox Auth                                              | ✅      | ✅        | `user@realm`                    |
+| proxmoxPassword            | Password for Proxmox Auth                                              | ✅      | ✅        | `some-password`                 |
+| proxmoxDatastore           | Datastore to use for configuration files                               | ❌      | ✅        | `local`                         |
+| proxmoxDatastoreRoot       | Filesystem root for the preferred datastore                            | ✅      | ✅        | `/var/lib/vz`                   |
+| proxmoxNode                | Proxmox Node to interact with                                          | ❌      | ✅        | `proxmox-host`                  |
+| proxmoxPublicKey           | Public Key to access created VMs                                       | ❌      | ❌        |                                 |
+| certificateAuthorityCrtUrl | URL to download the .crt file for a self-managed certificate authority | ✅      | ❌        |                                 |
 
 # Proxmox User Configuration
 
